@@ -59,7 +59,7 @@ ICFLAGS	= -g -O3
 #  Linux
 #
 # Gcc 4.2.4 or higher on i686.
-XCFLAGS	= -mtune=native -malign-double -DHAVE_IEEE_754 -DBSD
+XCFLAGS	= -mtune=native -malign-double -DHAVE_IEEE_754 #-DBSD
 # Gcc 3.2.2 or higher on i686.
 #XCFLAGS	= -mtune=pentium4 -malign-double -DHAVE_IEEE_754 -DBSD
 # Gcc 2.8.1 on i686.
