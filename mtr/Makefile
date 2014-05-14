@@ -53,6 +53,9 @@ lib$(P).a: $(POBJ)
 	ar rv $@ $?
 	$(RANLIB) $@
 
+lib$(P).so: $(POBJ)
+	gcc -shared $(POBJ) -o $@
+
 .c.o: $(PSRC) $(PHDR)
 	$(CC) -c  $< -I$(INCLUDE) $(CFLAGS) $(MTRDEBUG) 
 
