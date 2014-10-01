@@ -236,7 +236,10 @@ libso:
 		(cd $$dir; \
 		echo Making $$dir ...; \
 		make CC=$(CC) RANLIB=$(RANLIB) MFLAG= MNEMLIB= ICFLAGS="$(ICFLAGS)" XCFLAGS="$(XCFLAGS)" DDDEBUG="$(DDDEBUG)" MTRDEBUG="$(MTRDEBUG)" LDFLAGS="$(LDFLAGS)" PURE="$(PURE)" EXE="$(EXE)" lib$$dir.so); \
-		ln -s ../$$dir/lib$$dir.so libso/lib$$dir.so; \
+		if [ ! -e libso/lib$$dir.so ]; then \
+		    echo "=> Creating symlink: libso/lib$$dir.so"; \
+		    ln -s ../$$dir/lib$$dir.so libso/lib$$dir.so; \
+		fi \
 	done
 
 nanotrav: build
