@@ -49,7 +49,7 @@ RANLIB	= ranlib
 #ICFLAGS	=
 # These two are typical settings for optimized code with gcc.
 #ICFLAGS	= -g -O3 -Wall
-ICFLAGS	= -g -O3
+ICFLAGS	= -g -O3 -fpic
 
 # Use XCFLAGS to specify machine-dependent compilation flags.
 # For some platforms no special flags are needed.
@@ -204,6 +204,7 @@ DIRS	= $(BDIRS) nanotrav
 #------------------------------------------------------------------------
 
 .PHONY : build
+.PHONY : libso
 .PHONY : nanotrav
 .PHONY : check_leaks
 .PHONY : optimize_dec
@@ -224,6 +225,19 @@ build:
 		(cd $$dir; \
 		echo Making $$dir ...; \
 		make CC=$(CC) RANLIB=$(RANLIB) MFLAG= MNEMLIB= ICFLAGS="$(ICFLAGS)" XCFLAGS="$(XCFLAGS)" DDDEBUG="$(DDDEBUG)" MTRDEBUG="$(MTRDEBUG)" LDFLAGS="$(LDFLAGS)" PURE="$(PURE)" EXE="$(EXE)" )\
+	done
+
+libso:
+	sh ./setup.sh
+	mkdir -p libso
+	@for dir in $(BDIRS); do \
+		(cd $$dir; \
+		echo Making $$dir ...; \
+		make CC=$(CC) RANLIB=$(RANLIB) MFLAG= MNEMLIB= ICFLAGS="$(ICFLAGS)" XCFLAGS="$(XCFLAGS)" DDDEBUG="$(DDDEBUG)" MTRDEBUG="$(MTRDEBUG)" LDFLAGS="$(LDFLAGS)" PURE="$(PURE)" EXE="$(EXE)" lib$$dir.so); \
+		if [ ! -e libso/lib$$dir.so ]; then \
+		    echo "=> Creating symlink: libso/lib$$dir.so"; \
+		    ln -s ../$$dir/lib$$dir.so libso/lib$$dir.so; \
+		fi \
 	done
 
 nanotrav: build
