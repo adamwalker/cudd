@@ -155,7 +155,7 @@ cuddSetInteract(
   int  x,
   int  y)
 {
-    int posn, word, bit;
+    unsigned int posn, word, bit;
 
 #ifdef DD_DEBUG
     assert(x < y);
@@ -163,7 +163,7 @@ cuddSetInteract(
     assert(x >= 0);
 #endif
 
-    posn = ((((table->size << 1) - x - 3) * x) >> 1) + y - 1;
+    posn = (((((unsigned int)table->size << 1) - (unsigned int)x - 3) * (unsigned int)x) >> 1) + (unsigned int)y - 1;
     word = posn >> LOGBPL;
     bit = posn & (BPL-1);
     table->interact[word] |= 1L << bit;
@@ -190,20 +190,21 @@ cuddTestInteract(
   int  x,
   int  y)
 {
-    int posn, word, bit, result;
+    unsigned int posn, word, bit, result;
 
     if (x > y) {
 	int tmp = x;
 	x = y;
 	y = tmp;
     }
+
 #ifdef DD_DEBUG
     assert(x < y);
     assert(y < table->size);
     assert(x >= 0);
 #endif
 
-    posn = ((((table->size << 1) - x - 3) * x) >> 1) + y - 1;
+    posn = (((((unsigned int)table->size << 1) - (unsigned int)x - 3) * (unsigned int)x) >> 1) + (unsigned int)y - 1;
     word = posn >> LOGBPL;
     bit = posn & (BPL-1);
     result = (table->interact[word] >> bit) & 1L;
