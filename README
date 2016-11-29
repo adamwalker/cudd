@@ -1,3 +1,9 @@
+DEPRECATED
+
+CUDD 3.0.0 has support for building shared object files. 
+
+Download it from here: http://vlsi.colorado.edu/~fabio/.
+
 $Id$
 
 This directory contains a set of packages that allow you to build a toy
